@@ -1,10 +1,3 @@
-/* This is a module that exports four functions (`getGoals`, `setGoal`, `updateGoal`, and `deleteGoal`)
-that handle HTTP requests for a goal tracking application. The module uses the
-`express-async-handler` package to handle errors in asynchronous functions. The `getGoals` function
-retrieves all goals for a specific user, the `setGoal` function creates a new goal for a user, the
-`updateGoal` function updates an existing goal for a user, and the `deleteGoal` function deletes an
-existing goal for a user. All of these functions require authentication and are only accessible to
-authenticated users. */
 const asyncHandler = require('express-async-handler')
 
 const Goal = require('../models/goalModel')
@@ -46,6 +39,7 @@ const updateGoal = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Goal not found')
   }
+  const user=await User.findById(req.user.id)
 
   // Check for user
   if (!req.user) {
@@ -76,6 +70,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Goal not found')
   }
+  const user=await User.findById(req.user.id)
 
   // Check for user
   if (!req.user) {
